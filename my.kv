@@ -1,0 +1,200 @@
+#:import Window kivy.core.window.Window
+WindowManager:
+    FirstWindow:
+    SecondWindow:
+    ThirdWindow:
+    FourthWindow:
+<FirstWindow>:
+    name: "first"
+    id: f_L
+    Background:
+        id: B_L
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "Images\sky.png" 
+            Rectangle:
+                size: self.width, 400
+                pos: self.pos[0], self.pos[1] + self.height-400
+                texture: self.cloud_texture
+            Rectangle:
+                size: self.width, 300
+                pos: self.pos[0], self.pos[1]
+                texture: self.floor_texture
+            Ellipse: 
+                pos: 400,350
+                size: 350, 200
+            
+            Line:
+                points: (550,400,400,350,480,420,550,400)
+                width: 12
+    MyImage:
+        id: bird
+        source: 'Images\giphy.gif'
+        size_hint: None, None
+        size: 200, 200
+        pos_hint: {'right': 0.1, 'center_y': 0.5}
+        on_pos: self.on_touch_down(self)
+    MyLabel: 
+        id: my_label
+        text: "hi"
+        color: 0, 0, 0, 1
+        size_hint: .3, .3
+        pos_hint: {"x":.3, "y":.4}
+        font_name: "Fonts/Airfool.ttf"
+        font_size: "30dp"
+
+    MyButton:
+        id: s_button
+        text: "start"
+        font_name: "Fonts/Airfool.ttf"
+        background_normal: 'Images/2.png'
+        size_hint: 0.2, 0.2
+        pos_hint: {"x": 0.8, "y": .1}
+        on_press: root.manager.current = 'second'
+        
+
+            
+
+
+
+    Image:
+        source: 'Images/t.gif' 
+        size_hint: None, None  # disable size_hint so you can set size
+        size: 600, 700 # set size
+        pos_hint: {"x": -.1, "y": -.1}  # move to bottom-right corner
+<SecondWindow>:
+    name: "second"
+    Background:
+        id: B_L
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "Images\class1.png"
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        padding: 50
+        Label:
+            id: question_label
+            text: root.current_question
+            font_size: "20dp"
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            text_size: self.width, None
+            height: self.texture_size[1]
+            halign: 'center'
+            size_hint_x: None
+            width: 400
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Button:
+            id: 1
+            text: root.current_choices1
+            font_size: "20dp"
+            background_color: 0, 0.7, 0.3, 1
+            size_hint_x: .7
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_press: root.on_answer_selected(self.text)
+        Button:
+            id: 2
+            text: root.current_choices2
+            font_size: "20dp"
+            background_color: 0, 0.7, 0.3, 1
+            size_hint_x: .7
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_press: root.on_answer_selected(self.text)
+        Button:
+            id: 3
+            text: root.current_choices3
+            font_size: "20dp"
+            background_color: 0, 0.7, 0.3, 1
+            size_hint_x: .7
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_press: root.on_answer_selected(self.text)
+    Image:
+        
+        source: "Images\question.gif"
+        pos_hint: {"x":.35, "y":-.35}
+    Button:
+        id: next
+        text: "next"
+        pos_hint: {"center_x": .91, "center_y": .4}
+        size_hint_x: .2
+        size_hint_y: .2
+        background_normal: "Images/4.png"
+        disabled: not root.next_enable
+        background_disabled_normal: "Images/5.png"
+        on_press: root.manager.current = 'third'
+    Button:
+        id: tryagain
+        text: "try again"
+        pos_hint: {"center_x": .09, "center_y": .4}
+        size_hint_x: .2
+        size_hint_y: .2
+        background_normal: "Images/3.png"
+        disabled: not root.tryagain_enable
+        background_disabled_normal: "Images/5.png"  
+        on_press: root.reset_game()
+<ResultPopup>:
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: result_label
+            text: ""
+            font_size: "20sp"
+            size_hint_y: 0.8
+        Button:
+            text: "OK"
+            size_hint_y: 0.2
+            on_release: root.dismiss_popup()
+<ThirdWindow>:
+    name: "third"
+    Background:
+        id: B_L
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "Images\class3.png"
+
+
+    Image:
+        source: 'Images/t.gif' 
+        size_hint: None, None  # disable size_hint so you can set size
+        size: 600, 700 # set size
+        pos_hint: {"x": -.1, "y": 0}  # move to bottom-right corner
+    
+    Button:
+        text: "Next"
+        size_hint_y: 0.2
+        on_press: root.manager.current = 'fourth'
+        font_name: "Fonts/Airfool.ttf"
+        background_normal: 'Images/2.png'
+        size_hint: 0.2, 0.2
+        pos_hint: {"x": 0.7, "y": 0}
+    Label:
+        text: "Malware or malicious software is\n code that is specifically designed\n to damage, disrupt, steal, or \n inflict some other “bad” \n action on your computer.\nthree most common types of malware;\n virus, worm, and Trojan horse \n**IT IS YOUR TURN TO HUNT THEM**"
+        pos_hint: {"x": 0.35, "y": 0.5}
+        font_size: "13dp"
+        font_name: "Fonts/chalk.ttf"
+        size_hint: None, None
+        size: self.texture_size  # Set the size based on the label's content
+         
+            
+
+<FourthWindow>:
+    name: "fourth"          
+    Background:
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "Images/back4.png"
+    
+    Image:
+        source: 'Images/dance.gif'    
+        size_hint: 0.31, 0.31
+        pos_hint: {"x": -.04, "y": -.03}  # move to bottom-right corner   
+        
